@@ -1,6 +1,7 @@
 package com.antonioleiva.mymovies
 
 import android.app.Application
+import androidx.biometric.BiometricPrompt
 import androidx.fragment.app.FragmentActivity
 import com.example.cleanarchme.R
 import com.example.cleanarchme.data.*
@@ -50,8 +51,8 @@ private val appModule = module {
     single(named("baseUrl")) { "https://api.themoviedb.org/3/" }
     single { MovieDataBase.build(get()).movieDao() }
     factory<UserPreferences> { UserPreferencesImpl(get()) }
-    factory<Auth> { (fragAct: FragmentActivity) ->
-        AuthImpl(get(), fragAct)
+    factory<Auth> { (fragAct: FragmentActivity, callback: BiometricPrompt.AuthenticationCallback) ->
+        AuthImpl(fragAct,callback)
     }
     factory<AuthValidator> { AuthValidatorImpl(get()) }
     factory<LocalDataSource> { LocalDataSourceImpl(get()) }

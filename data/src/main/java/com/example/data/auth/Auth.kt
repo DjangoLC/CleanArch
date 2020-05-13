@@ -5,8 +5,7 @@ interface Auth {
     fun authWithFingerPrint(title: String,
                             subtitle: String,
                             negativeButtonText: String = "Cancelar",
-                            deviceCredentialAllowed: Boolean = false,
-                            callback: (Auth.Status) -> Unit)
+                            deviceCredentialAllowed: Boolean = false)
 
     fun authWithFaceID(callback: (Auth.Status) -> Unit)
 

@@ -13,13 +13,16 @@ interface ContractLogin {
 
         fun nextActivity()
         fun loginError()
-        fun errorBiometric()
+        fun errorBiometric(errString: String)
         fun loginBiometrics()
     }
 
     interface ContractPresenter : BasePresenter<ContractLoginView> {
         fun onLoginClick()
         fun onEnableFingerPrintClick()
+        fun biometricError(errString: String)
+        fun biometricSuccess()
+        fun biometricFailed()
     }
 
 }

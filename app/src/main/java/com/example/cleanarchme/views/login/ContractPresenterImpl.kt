@@ -2,7 +2,6 @@ package com.example.cleanarchme.views.login
 
 import com.example.cleanarchme.views.common.Scope
 import com.example.data.auth.Auth
-import com.example.usecases.FingerPrintAuthenticate
 import com.example.usecases.Login
 import com.example.usecases.ToggleFingerPrint
 import kotlinx.coroutines.CoroutineDispatcher
@@ -50,7 +49,7 @@ class ContractPresenterImpl(
                     view?.nextActivity()
                 }
                 Auth.Status.BIOMETRIC_FAILED -> {
-                    view?.errorBiometric()
+
                 }
                 Auth.Status.LOGIN_ERROR -> {
                     view?.loginError()
@@ -67,5 +66,17 @@ class ContractPresenterImpl(
 
     override fun onEnableFingerPrintClick() {
         toggleFingerPrint.invoke(view?.isEnableFingerPrint() ?: false)
+    }
+
+    override fun biometricError(errString: String) {
+        view?.errorBiometric(errString)
+    }
+
+    override fun biometricSuccess() {
+        view?.nextActivity()
+    }
+
+    override fun biometricFailed() {
+
     }
 }

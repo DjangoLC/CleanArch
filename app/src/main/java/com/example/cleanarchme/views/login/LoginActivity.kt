@@ -1,25 +1,21 @@
 package com.example.cleanarchme.views.login
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.CompoundButton
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricPrompt
 import com.example.cleanarchme.R
-import com.example.cleanarchme.views.common.Scope
 import com.example.cleanarchme.views.common.toast
 import com.example.cleanarchme.views.main.MainActivity
 import com.example.data.UserPreferences
 import com.example.data.auth.Auth
 import com.example.data.auth.AuthValidator
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
 import org.koin.android.scope.lifecycleScope
 import org.koin.core.parameter.parametersOf
-import kotlin.coroutines.CoroutineContext
 
 class LoginActivity : AppCompatActivity(), ContractLogin.ContractLoginView {
 
@@ -28,7 +24,24 @@ class LoginActivity : AppCompatActivity(), ContractLogin.ContractLoginView {
     private val authValidator: AuthValidator by inject()
 
     private val auth: Auth by inject {
-        parametersOf(this)
+        parametersOf(this, callback)
+    }
+
+    private val callback = object : BiometricPrompt.AuthenticationCallback() {
+        override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+            super.onAuthenticationError(errorCode, errString)
+            presenter.biometricError(errString.toString())
+        }
+
+        override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+            super.onAuthenticationSucceeded(result)
+            presenter.biometricSuccess()
+        }
+
+        override fun onAuthenticationFailed() {
+            super.onAuthenticationFailed()
+            presenter.biometricFailed()
+        }
     }
 
     private val preferences: UserPreferences by inject()
@@ -90,21 +103,11 @@ class LoginActivity : AppCompatActivity(), ContractLogin.ContractLoginView {
         toast(getString(R.string.login_error))
     }
 
-    override fun errorBiometric() {
-        toast(getString(R.string.biometric_error))
+    override fun errorBiometric(errString: String) {
+        toast(errString)
     }
 
     override fun loginBiometrics() {
-        auth.authWithFingerPrint("title","subtitle",deviceCredentialAllowed = true) {
-            when (it) {
-                Auth.Status.BIOMETRIC_SUCCESS -> {
-                    nextActivity()
-                }
-                Auth.Status.BIOMETRIC_FAILED -> {
-                    //errorBiometric()
-                }
-                else -> loginError()
-            }
-        }
+        auth.authWithFingerPrint("title", "subtitle", deviceCredentialAllowed = true)
     }
 }
