@@ -1,9 +1,9 @@
 package com.antonioleiva.mymovies
 
 import android.app.Application
+import androidx.fragment.app.FragmentActivity
 import com.example.cleanarchme.R
-import com.example.cleanarchme.data.AndroidPermissionChecker
-import com.example.cleanarchme.data.PlayServicesLocationDataSource
+import com.example.cleanarchme.data.*
 import com.example.cleanarchme.data.database.LocalDataSourceImpl
 import com.example.cleanarchme.data.database.MovieDataBase
 import com.example.cleanarchme.data.server.RemoteDataSourceImpl1
@@ -11,19 +11,23 @@ import com.example.cleanarchme.data.server.Retrofit
 import com.example.cleanarchme.views.detail.DetailActivity
 import com.example.cleanarchme.views.detail.DetailContract
 import com.example.cleanarchme.views.detail.DetailPresenterImpl
+import com.example.cleanarchme.views.login.ContractLogin
+import com.example.cleanarchme.views.login.ContractPresenterImpl
+import com.example.cleanarchme.views.login.LoginActivity
 import com.example.cleanarchme.views.main.MainActivity
 import com.example.cleanarchme.views.main.MainContract
 import com.example.cleanarchme.views.main.MainPresenterImpl
 import com.example.data.PermissionChecker
+import com.example.data.UserPreferences
+import com.example.data.auth.Auth
+import com.example.data.auth.AuthValidator
 import com.example.data.repository.MoviesRepository
 import com.example.data.repository.RegionRepository
+import com.example.data.repository.UserRepository
 import com.example.data.source.LocalDataSource
 import com.example.data.source.LocationDataSource
 import com.example.data.source.RemoteDataSource
-import com.example.usecases.GetFavoritesMovies
-import com.example.usecases.GetMovieById
-import com.example.usecases.GetPopularMovies
-import com.example.usecases.ToggleMovieFavorite
+import com.example.usecases.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidApplication
@@ -45,6 +49,11 @@ private val appModule = module {
     single(named("apiKey")) { androidApplication().getString(R.string.api_key) }
     single(named("baseUrl")) { "https://api.themoviedb.org/3/" }
     single { MovieDataBase.build(get()).movieDao() }
+    factory<UserPreferences> { UserPreferencesImpl(get()) }
+    factory<Auth> { (fragAct: FragmentActivity) ->
+        AuthImpl(get(), fragAct)
+    }
+    factory<AuthValidator> { AuthValidatorImpl(get()) }
     factory<LocalDataSource> { LocalDataSourceImpl(get()) }
     factory<RemoteDataSource> { RemoteDataSourceImpl1(Retrofit(get(named("baseUrl"))).service) }
     factory<LocationDataSource> { PlayServicesLocationDataSource(androidApplication()) }
@@ -55,6 +64,7 @@ private val appModule = module {
 val dataModule = module {
     factory { RegionRepository(get(), get()) }
     factory { MoviesRepository(get(), get(), get(named("apiKey")), get()) }
+    factory { UserRepository(get(), get(),get()) }
 }
 
 private val scopesModule = module {
@@ -68,6 +78,16 @@ private val scopesModule = module {
     scope(named<DetailActivity>()) {
         scoped<DetailContract.DetailPresenter> { (id: Int) ->
             DetailPresenterImpl(GetMovieById(get()), ToggleMovieFavorite(get()), id, get())
+        }
+    }
+
+    scope(named<LoginActivity>()) {
+        scoped<ContractLogin.ContractPresenter> {
+            ContractPresenterImpl(
+                Login(get()),
+                ToggleFingerPrint(get()),
+                get()
+            )
         }
     }
 }

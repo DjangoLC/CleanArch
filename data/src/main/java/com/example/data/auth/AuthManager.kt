@@ -1,4 +1,7 @@
 package com.example.data.auth
 
-class AuthManager {
+class AuthManager(private val auth: Auth) {
+
+
+
 }

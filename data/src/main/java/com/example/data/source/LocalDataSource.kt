@@ -1,5 +1,6 @@
 package com.example.data.source
 
+import com.example.data.auth.Auth
 import com.example.domain.Movie
 
 interface LocalDataSource {
@@ -9,4 +10,5 @@ interface LocalDataSource {
     suspend fun findById(id: Int): Movie
     suspend fun updateMovie(movie: Movie)
     suspend fun getFavoriteMovies(): List<Movie>
+    suspend fun login(user: String, password: String) : Auth.Status
 }

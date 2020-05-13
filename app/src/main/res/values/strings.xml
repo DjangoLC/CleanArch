@@ -4,6 +4,11 @@
     <string name="api_key">e462893643adb76db04afff8aa0f30c0</string>
     <string name="all">Todas</string>
     <string name="favorite">Favoritos</string>
+    <string name="empty_fields">Usuario o contrasenia vacios</string>
+    <string name="enable_fingerprint">Activar huella al iniciar sesion</string>
+    <string name="error_fingerprint">ocurrio un error al autenticar con huella</string>
+    <string name="login_error">Error al iniciar sesion</string>
+    <string name="biometric_error">Error en biometrico</string>
 
     <string-array name="movie_options">
         <item>Todas</item>
