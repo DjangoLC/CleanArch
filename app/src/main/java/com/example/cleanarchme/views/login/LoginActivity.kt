@@ -9,6 +9,7 @@ import androidx.biometric.BiometricPrompt
 import com.example.cleanarchme.R
 import com.example.cleanarchme.views.common.toast
 import com.example.cleanarchme.views.main.MainActivity
+import com.example.cleanarchme.views.show
 import com.example.data.UserPreferences
 import com.example.data.auth.Auth
 import com.example.data.auth.AuthValidator
@@ -20,8 +21,6 @@ import org.koin.core.parameter.parametersOf
 class LoginActivity : AppCompatActivity(), ContractLogin.ContractLoginView {
 
     private val presenter: ContractLogin.ContractPresenter by lifecycleScope.inject()
-
-    private val authValidator: AuthValidator by inject()
 
     private val auth: Auth by inject {
         parametersOf(this, callback)
@@ -44,30 +43,21 @@ class LoginActivity : AppCompatActivity(), ContractLogin.ContractLoginView {
         }
     }
 
-    private val preferences: UserPreferences by inject()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
         presenter.attach(this)
+
         btnLogin.setOnClickListener {
             presenter.onLoginClick()
-        }
-
-        checkFingerPrint.apply {
-            visibility = if (authValidator.hasFingerPrint()) View.VISIBLE else View.GONE
-            isChecked = preferences.getBoolean(UserPreferences.HAS_FINGERPRINT_ENABLE)
         }
 
         checkFingerPrint.setOnCheckedChangeListener { buttonView, isChecked ->
             presenter.onEnableFingerPrintClick()
         }
 
-        presenter.onLoginClick()
-        tilUser.apply { setText(preferences.getString(UserPreferences.USER_USERNAME)) }
-        tilPass.apply { setText(preferences.getString(UserPreferences.USER_PASS)) }
-
+        presenter.onLogin()
     }
 
     override fun onDestroy() {
@@ -83,6 +73,14 @@ class LoginActivity : AppCompatActivity(), ContractLogin.ContractLoginView {
         return tilPass.text.toString()
     }
 
+    override fun setUser(user: String) {
+        tilUser.setText(user)
+    }
+
+    override fun setPassword(pass: String) {
+        tilPass.setText(pass)
+    }
+
     override fun isEnableFingerPrint(): Boolean {
         return checkFingerPrint.isChecked
     }
@@ -93,6 +91,11 @@ class LoginActivity : AppCompatActivity(), ContractLogin.ContractLoginView {
 
     override fun errorFingerPrint() {
         Toast.makeText(this, getString(R.string.error_fingerprint), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun setupFingerPrint(visibility: Boolean, check: Boolean) {
+        checkFingerPrint.show(visibility)
+        checkFingerPrint.isChecked = check
     }
 
     override fun nextActivity() {

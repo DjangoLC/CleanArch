@@ -7,9 +7,12 @@ interface ContractLogin {
     interface ContractLoginView {
         fun getUser(): String
         fun getPassword(): String
-        fun isEnableFingerPrint() : Boolean
+        fun setUser(user: String)
+        fun setPassword(pass: String)
+        fun isEnableFingerPrint(): Boolean
         fun emptyFields()
         fun errorFingerPrint()
+        fun setupFingerPrint(visibility: Boolean, check: Boolean)
 
         fun nextActivity()
         fun loginError()
@@ -23,6 +26,7 @@ interface ContractLogin {
         fun biometricError(errString: String)
         fun biometricSuccess()
         fun biometricFailed()
+        fun onLogin()
     }
 
 }

@@ -52,7 +52,7 @@ private val appModule = module {
     single { MovieDataBase.build(get()).movieDao() }
     factory<UserPreferences> { UserPreferencesImpl(get()) }
     factory<Auth> { (fragAct: FragmentActivity, callback: BiometricPrompt.AuthenticationCallback) ->
-        AuthImpl(fragAct,callback)
+        AuthImpl(fragAct, callback)
     }
     factory<AuthValidator> { AuthValidatorImpl(get()) }
     factory<LocalDataSource> { LocalDataSourceImpl(get()) }
@@ -65,7 +65,7 @@ private val appModule = module {
 val dataModule = module {
     factory { RegionRepository(get(), get()) }
     factory { MoviesRepository(get(), get(), get(named("apiKey")), get()) }
-    factory { UserRepository(get(), get(),get()) }
+    factory { UserRepository(get(), get(), get()) }
 }
 
 private val scopesModule = module {
@@ -86,7 +86,10 @@ private val scopesModule = module {
         scoped<ContractLogin.ContractPresenter> {
             ContractPresenterImpl(
                 Login(get()),
+                GetUser(get()),
                 ToggleFingerPrint(get()),
+                GetAuthMethod(get()),
+                SupportBiometrics(get()),
                 get()
             )
         }

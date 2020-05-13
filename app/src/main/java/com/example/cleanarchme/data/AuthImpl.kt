@@ -12,7 +12,12 @@ class AuthImpl(
 
     private val executor = Executor { r -> r.run() }
 
-    override fun authWithFingerPrint(title: String, subtitle: String, negativeButtonText: String, deviceCredentialAllowed: Boolean) {
+    override fun authWithFingerPrint(
+        title: String,
+        subtitle: String,
+        negativeButtonText: String,
+        deviceCredentialAllowed: Boolean
+    ) {
         val promptInfo =
             createBiometricPrompt(title, subtitle, negativeButtonText, deviceCredentialAllowed)
 
@@ -42,9 +47,5 @@ class AuthImpl(
                 .setNegativeButtonText(negativeButtonText)
                 .build()
         }
-    }
-
-    override fun authWithFaceID(callback: (Auth.Status) -> Unit) {
-        callback(Auth.Status.NO_AUTH)
     }
 }

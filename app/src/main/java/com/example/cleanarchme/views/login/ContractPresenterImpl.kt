@@ -2,14 +2,17 @@ package com.example.cleanarchme.views.login
 
 import com.example.cleanarchme.views.common.Scope
 import com.example.data.auth.Auth
-import com.example.usecases.Login
-import com.example.usecases.ToggleFingerPrint
+import com.example.data.auth.AuthMethod
+import com.example.usecases.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
 class ContractPresenterImpl(
     private val login: Login,
+    private val getUser: GetUser,
     private val toggleFingerPrint: ToggleFingerPrint,
+    private val getAuthMethod: GetAuthMethod,
+    private val supportBiometrics: SupportBiometrics,
     uiDispatcher: CoroutineDispatcher
 ) : ContractLogin.ContractPresenter, Scope by Scope.Impl(uiDispatcher) {
 
@@ -21,6 +24,7 @@ class ContractPresenterImpl(
 
     override fun attach(view: ContractLogin.ContractLoginView) {
         this.view = view
+        setupView()
     }
 
     override fun detach() {
@@ -41,15 +45,6 @@ class ContractPresenterImpl(
             when (login.invoke(user, pass)) {
                 Auth.Status.LOGIN_SUCCESS -> {
                     view?.nextActivity()
-                }
-                Auth.Status.NO_AUTH -> {
-
-                }
-                Auth.Status.BIOMETRIC_SUCCESS -> {
-                    view?.nextActivity()
-                }
-                Auth.Status.BIOMETRIC_FAILED -> {
-
                 }
                 Auth.Status.LOGIN_ERROR -> {
                     view?.loginError()
@@ -79,4 +74,23 @@ class ContractPresenterImpl(
     override fun biometricFailed() {
 
     }
+
+    override fun onLogin() {
+        val authMethod = getAuthMethod.invoke()
+
+        if (authMethod == AuthMethod.BIOMETRIC) {
+            view?.loginBiometrics()
+        }
+    }
+
+    private fun setupView() {
+        val user = getUser.invoke()
+        val authMethod = getAuthMethod.invoke()
+        val biometrics = supportBiometrics.invoke()
+
+        view?.setUser(user.username)
+        view?.setPassword(user.password)
+        view?.setupFingerPrint(biometrics, authMethod == AuthMethod.BIOMETRIC)
+    }
+
 }
