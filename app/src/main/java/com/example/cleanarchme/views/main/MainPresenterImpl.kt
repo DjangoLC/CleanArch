@@ -1,5 +1,6 @@
 package com.example.cleanarchme.views.main
 
+import com.example.cleanarchme.views.BasePresenterImpl
 import com.example.cleanarchme.views.common.Scope
 import com.example.usecases.GetFavoritesMovies
 import com.example.usecases.GetPopularMovies
@@ -10,22 +11,7 @@ class MainPresenterImpl(
     private val getPopularMovies: GetPopularMovies,
     private val getFavoritesMovies: GetFavoritesMovies,
     uiDispatcher: CoroutineDispatcher
-) : MainContract.MainPresenter, Scope by Scope.Impl(uiDispatcher) {
-
-    private var view: MainContract.MainView? = null
-
-    init {
-        initScope()
-    }
-
-    override fun attach(view: MainContract.MainView) {
-        this.view = view
-    }
-
-    override fun detach() {
-        this.view = null
-        destroyScope()
-    }
+) : BasePresenterImpl<MainContract.MainView>(uiDispatcher), MainContract.MainPresenter{
 
     override fun onLoadMovies() {
         launch {

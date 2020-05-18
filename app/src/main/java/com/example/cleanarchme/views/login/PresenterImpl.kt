@@ -1,6 +1,6 @@
 package com.example.cleanarchme.views.login
 
-import com.example.cleanarchme.views.common.Scope
+import com.example.cleanarchme.views.BasePresenterImpl
 import com.example.data.auth.Auth
 import com.example.data.auth.AuthMethod
 import com.example.usecases.*
@@ -14,28 +14,10 @@ class PresenterImpl(
     private val getAuthMethod: GetAuthMethod,
     private val supportBiometrics: SupportBiometrics,
     uiDispatcher: CoroutineDispatcher
-) : ContractLogin.Presenter, Scope by Scope.Impl(uiDispatcher) {
+) : BasePresenterImpl<ContractLogin.LoginView>(uiDispatcher), ContractLogin.Presenter{
 
-    private var view: ContractLogin.LoginView? = null
-
-    init {
-        initScope()
-    }
-
-    override fun attach(view: ContractLogin.LoginView) {
-        this.view = view
-        setupView()
-    }
-
-    override fun detach() {
-        this.view = null
-        destroyScope()
-    }
-
-    override fun onLoginClick() {
+    override fun onLoginClick(user: String, pass: String) {
         launch {
-            val user = view?.getUser() ?: ""
-            val pass = view?.getPassword() ?: ""
 
             if (user.isEmpty() || pass.isEmpty()) {
                 view?.emptyFields()

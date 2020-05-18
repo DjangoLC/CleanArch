@@ -1,12 +1,11 @@
 package com.example.cleanarchme.views.login
 
 import com.example.cleanarchme.views.BasePresenter
+import com.example.cleanarchme.views.BaseView
 
 interface ContractLogin {
 
-    interface LoginView {
-        fun getUser(): String
-        fun getPassword(): String
+    interface LoginView : BaseView {
         fun setUser(user: String)
         fun setPassword(pass: String)
         fun isEnableFingerPrint(): Boolean
@@ -21,7 +20,7 @@ interface ContractLogin {
     }
 
     interface Presenter : BasePresenter<LoginView> {
-        fun onLoginClick()
+        fun onLoginClick(user: String, pass: String)
         fun onEnableFingerPrintClick()
         fun biometricError(errString: String)
         fun biometricSuccess()

@@ -1,9 +1,6 @@
 package com.example.cleanarchme.views
 
-interface BasePresenter<T> {
-
-    fun attach(view: T)
-
+interface BasePresenter<V : BaseView> {
+    fun attach(view: V)
     fun detach()
-
 }

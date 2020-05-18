@@ -45,9 +45,8 @@ class LoginActivity : AppCompatActivity(), ContractLogin.LoginView {
         setContentView(R.layout.activity_login)
 
         presenter.attach(this)
-
         btnLogin.setOnClickListener {
-            presenter.onLoginClick()
+            presenter.onLoginClick(tilUser.text.toString(),tilPass.text.toString())
         }
 
         checkFingerPrint.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -55,19 +54,6 @@ class LoginActivity : AppCompatActivity(), ContractLogin.LoginView {
         }
 
         presenter.onLogin()
-    }
-
-    override fun onDestroy() {
-        presenter.detach()
-        super.onDestroy()
-    }
-
-    override fun getUser(): String {
-        return tilUser.text.toString()
-    }
-
-    override fun getPassword(): String {
-        return tilPass.text.toString()
     }
 
     override fun setUser(user: String) {
