@@ -1,4 +1,4 @@
-package com.example.data.repository
+package com.example.data.repository.user
 
 import com.example.data.UserPreferences
 import com.example.data.auth.Auth
@@ -7,13 +7,13 @@ import com.example.data.auth.AuthValidator
 import com.example.data.source.LocalDataSource
 import com.example.domain.User
 
-class UserRepository(
+class UsersRepository(
     private val authValidator: AuthValidator,
     private val preferences: UserPreferences,
     private val localDataSource: LocalDataSource
-) {
+) : UserRepository {
 
-    suspend fun login(user: String, pass: String): Auth.Status {
+    override suspend fun login(user: String, pass: String): Auth.Status {
 
         preferences.saveString(UserPreferences.USER_PASS, pass)
         preferences.saveString(UserPreferences.USER_USERNAME, user)
@@ -31,24 +31,24 @@ class UserRepository(
         }
     }
 
-    fun enableFingerPrint(value: Boolean) {
+    override fun enableFingerPrint(value: Boolean) {
         preferences.saveBoolean(UserPreferences.HAS_FINGERPRINT_ENABLE, value)
     }
 
-    fun getUser(): User {
+    override fun getUser(): User {
         return User(
             username = preferences.getString(UserPreferences.USER_USERNAME),
             password = preferences.getString(UserPreferences.USER_PASS)
         )
     }
 
-    fun getAuthMethod(): AuthMethod {
+    override fun getAuthMethod(): AuthMethod {
         return if (preferences.getBoolean(UserPreferences.HAS_FACE_ID_ENABLE) ||
             preferences.getBoolean(UserPreferences.HAS_FINGERPRINT_ENABLE)
         ) AuthMethod.BIOMETRIC else AuthMethod.CREDENTIALS
     }
 
-    fun getSupportBiometrics(): Boolean {
+    override fun getSupportBiometrics(): Boolean {
         return authValidator.hasFaceId() || authValidator.hasFingerPrint()
     }
 }

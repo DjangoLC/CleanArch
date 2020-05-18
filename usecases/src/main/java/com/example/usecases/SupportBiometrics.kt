@@ -1,9 +1,9 @@
 package com.example.usecases
 
-import com.example.data.repository.UserRepository
+import com.example.data.repository.user.UserRepository
 
-class SupportBiometrics(private val userRepository: UserRepository) {
+class SupportBiometrics(private val usersRepository: UserRepository) {
 
-    fun invoke() = userRepository.getSupportBiometrics()
+    fun invoke() = usersRepository.getSupportBiometrics()
 
 }

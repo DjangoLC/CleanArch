@@ -44,4 +44,11 @@ class MainPresenterImpl(
             view?.setupMovies(movies)
         }
     }
+
+    override fun loadMovies(filterType: ManagerSpinnerMovies.MovieFilterType) {
+        when (filterType) {
+            ManagerSpinnerMovies.MovieFilterType.ALL_MOVIES -> onLoadMovies()
+            ManagerSpinnerMovies.MovieFilterType.FAVORITES_MOVIES -> onLoadFavoritesMovies()
+        }
+    }
 }

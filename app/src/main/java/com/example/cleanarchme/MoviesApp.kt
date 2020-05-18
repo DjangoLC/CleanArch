@@ -1,7 +1,7 @@
 package com.example.cleanarchme
 
 import android.app.Application
-import com.antonioleiva.mymovies.initDI
+import com.example.cleanarchme.di.initDI
 
 class MoviesApp : Application() {
 

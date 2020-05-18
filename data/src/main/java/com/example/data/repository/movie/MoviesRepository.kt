@@ -1,5 +1,7 @@
-package com.example.data.repository
+package com.example.data.repository.movie
 
+import com.example.data.repository.region.RegionRepository
+import com.example.data.repository.region.RegionsRepository
 import com.example.data.source.LocalDataSource
 import com.example.data.source.RemoteDataSource
 import com.example.domain.Movie
@@ -9,9 +11,9 @@ class MoviesRepository(
     private val remoteDataSource: RemoteDataSource,
     private val apiKey: String,
     private val regionRepository: RegionRepository
-) {
+) : MovieRepository {
 
-    suspend fun popularMovies(): List<Movie> {
+    override suspend fun popularMovies(): List<Movie> {
 
         if (localDataSource.isEmpty()) {
             val movies =
@@ -22,15 +24,15 @@ class MoviesRepository(
         return localDataSource.getPopularMovies()
     }
 
-    suspend fun findById(id: Int) : Movie {
+    override suspend fun findById(id: Int) : Movie {
         return localDataSource.findById(id)
     }
 
-    suspend fun updateMovie(movie: Movie) {
+    override suspend fun updateMovie(movie: Movie) {
         return localDataSource.updateMovie(movie)
     }
 
-    suspend fun favoriteMovies() : List<Movie>{
+    override suspend fun favoriteMovies() : List<Movie>{
         return localDataSource.getFavoriteMovies()
     }
 

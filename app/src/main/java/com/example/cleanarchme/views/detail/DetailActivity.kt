@@ -3,25 +3,11 @@ package com.example.cleanarchme.views.detail
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.annotation.RequiresApi
 import com.example.cleanarchme.R
-import com.example.cleanarchme.data.AndroidPermissionChecker
-import com.example.cleanarchme.data.PlayServicesLocationDataSource
-import com.example.cleanarchme.data.database.LocalDataSourceImpl
-import com.example.cleanarchme.data.database.MovieDataBase
-import com.example.cleanarchme.data.server.RemoteDataSourceImpl1
-import com.example.cleanarchme.data.server.Retrofit
 import com.example.cleanarchme.views.common.loadUrl
-import com.example.data.repository.MoviesRepository
-import com.example.data.repository.RegionRepository
 import com.example.domain.Movie
-import com.example.usecases.GetMovieById
-import com.example.usecases.ToggleMovieFavorite
 import kotlinx.android.synthetic.main.activity_detail.*
-import kotlinx.coroutines.Dispatchers
-import org.koin.android.ext.android.inject
-import org.koin.android.scope.currentScope
 import org.koin.android.scope.lifecycleScope
 import org.koin.core.parameter.parametersOf
 

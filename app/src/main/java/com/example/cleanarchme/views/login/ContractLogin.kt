@@ -4,7 +4,7 @@ import com.example.cleanarchme.views.BasePresenter
 
 interface ContractLogin {
 
-    interface ContractLoginView {
+    interface LoginView {
         fun getUser(): String
         fun getPassword(): String
         fun setUser(user: String)
@@ -20,7 +20,7 @@ interface ContractLogin {
         fun loginBiometrics()
     }
 
-    interface ContractPresenter : BasePresenter<ContractLoginView> {
+    interface Presenter : BasePresenter<LoginView> {
         fun onLoginClick()
         fun onEnableFingerPrintClick()
         fun biometricError(errString: String)

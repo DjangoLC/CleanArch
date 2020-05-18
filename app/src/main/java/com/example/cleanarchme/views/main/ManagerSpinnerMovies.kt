@@ -4,7 +4,8 @@ import android.view.View
 import android.widget.AdapterView
 import com.example.cleanarchme.R
 
-class ManagerSpinnerMovies(private val presenter: MainContract.MainPresenter) : AdapterView.OnItemSelectedListener {
+class ManagerSpinnerMovies(private val movieListener: (MovieFilterType) -> Unit) :
+    AdapterView.OnItemSelectedListener {
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
 
@@ -13,12 +14,17 @@ class ManagerSpinnerMovies(private val presenter: MainContract.MainPresenter) : 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when (parent?.adapter?.getItem(position) as String) {
             parent.context.getString(R.string.all) -> {
-                presenter.onLoadMovies()
+                movieListener(MovieFilterType.ALL_MOVIES)
             }
 
             parent.context.getString(R.string.favorite) -> {
-                presenter.onLoadFavoritesMovies()
+                movieListener(MovieFilterType.FAVORITES_MOVIES)
             }
         }
+    }
+
+    enum class MovieFilterType {
+        ALL_MOVIES,
+        FAVORITES_MOVIES
     }
 }

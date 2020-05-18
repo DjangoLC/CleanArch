@@ -15,5 +15,6 @@ interface MainContract {
         fun onLoadMovies()
         fun onMovieClick(id: Int)
         fun onLoadFavoritesMovies()
+        fun loadMovies(filterType: ManagerSpinnerMovies.MovieFilterType)
     }
 }

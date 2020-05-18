@@ -1,4 +1,4 @@
-package com.antonioleiva.mymovies
+package com.example.cleanarchme.di
 
 import android.app.Application
 import androidx.biometric.BiometricPrompt
@@ -13,7 +13,7 @@ import com.example.cleanarchme.views.detail.DetailActivity
 import com.example.cleanarchme.views.detail.DetailContract
 import com.example.cleanarchme.views.detail.DetailPresenterImpl
 import com.example.cleanarchme.views.login.ContractLogin
-import com.example.cleanarchme.views.login.ContractPresenterImpl
+import com.example.cleanarchme.views.login.PresenterImpl
 import com.example.cleanarchme.views.login.LoginActivity
 import com.example.cleanarchme.views.main.MainActivity
 import com.example.cleanarchme.views.main.MainContract
@@ -22,9 +22,12 @@ import com.example.data.PermissionChecker
 import com.example.data.UserPreferences
 import com.example.data.auth.Auth
 import com.example.data.auth.AuthValidator
-import com.example.data.repository.MoviesRepository
-import com.example.data.repository.RegionRepository
-import com.example.data.repository.UserRepository
+import com.example.data.repository.movie.MovieRepository
+import com.example.data.repository.movie.MoviesRepository
+import com.example.data.repository.region.RegionRepository
+import com.example.data.repository.region.RegionsRepository
+import com.example.data.repository.user.UserRepository
+import com.example.data.repository.user.UsersRepository
 import com.example.data.source.LocalDataSource
 import com.example.data.source.LocationDataSource
 import com.example.data.source.RemoteDataSource
@@ -63,9 +66,22 @@ private val appModule = module {
 }
 
 val dataModule = module {
-    factory { RegionRepository(get(), get()) }
-    factory { MoviesRepository(get(), get(), get(named("apiKey")), get()) }
-    factory { UserRepository(get(), get(), get()) }
+    factory<RegionRepository> { RegionsRepository(get(), get()) }
+    factory<MovieRepository> {
+        MoviesRepository(
+            get(),
+            get(),
+            get(named("apiKey")),
+            get()
+        )
+    }
+    factory<UserRepository> {
+        UsersRepository(
+            get(),
+            get(),
+            get()
+        )
+    }
 }
 
 private val scopesModule = module {
@@ -83,8 +99,8 @@ private val scopesModule = module {
     }
 
     scope(named<LoginActivity>()) {
-        scoped<ContractLogin.ContractPresenter> {
-            ContractPresenterImpl(
+        scoped<ContractLogin.Presenter> {
+            PresenterImpl(
                 Login(get()),
                 GetUser(get()),
                 ToggleFingerPrint(get()),

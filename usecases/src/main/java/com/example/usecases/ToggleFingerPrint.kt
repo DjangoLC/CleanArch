@@ -1,11 +1,11 @@
 package com.example.usecases
 
-import com.example.data.repository.UserRepository
+import com.example.data.repository.user.UserRepository
 
-class ToggleFingerPrint (private val userRepository: UserRepository) {
+class ToggleFingerPrint (private val usersRepository: UserRepository) {
 
     fun invoke(value: Boolean) {
-        userRepository.enableFingerPrint(value)
+        usersRepository.enableFingerPrint(value)
     }
 
 }

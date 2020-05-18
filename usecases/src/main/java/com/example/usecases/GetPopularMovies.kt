@@ -1,8 +1,8 @@
 package com.example.usecases
 
-import com.example.data.repository.MoviesRepository
+import com.example.data.repository.movie.MovieRepository
 
-class GetPopularMovies(private val moviesRepository: MoviesRepository) {
+class GetPopularMovies(private val moviesRepository: MovieRepository) {
 
     suspend fun invoke() = moviesRepository.popularMovies()
 

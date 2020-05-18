@@ -7,22 +7,22 @@ import com.example.usecases.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
-class ContractPresenterImpl(
+class PresenterImpl(
     private val login: Login,
     private val getUser: GetUser,
     private val toggleFingerPrint: ToggleFingerPrint,
     private val getAuthMethod: GetAuthMethod,
     private val supportBiometrics: SupportBiometrics,
     uiDispatcher: CoroutineDispatcher
-) : ContractLogin.ContractPresenter, Scope by Scope.Impl(uiDispatcher) {
+) : ContractLogin.Presenter, Scope by Scope.Impl(uiDispatcher) {
 
-    private var view: ContractLogin.ContractLoginView? = null
+    private var view: ContractLogin.LoginView? = null
 
     init {
         initScope()
     }
 
-    override fun attach(view: ContractLogin.ContractLoginView) {
+    override fun attach(view: ContractLogin.LoginView) {
         this.view = view
         setupView()
     }
