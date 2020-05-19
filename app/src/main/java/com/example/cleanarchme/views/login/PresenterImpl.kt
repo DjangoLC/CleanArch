@@ -20,37 +20,37 @@ class PresenterImpl(
         launch {
 
             if (user.isEmpty() || pass.isEmpty()) {
-                view?.emptyFields()
+                view.emptyFields()
                 return@launch
             }
 
             when (login.invoke(user, pass)) {
                 Auth.Status.LOGIN_SUCCESS -> {
-                    view?.nextActivity()
+                    view.nextActivity()
                 }
                 Auth.Status.LOGIN_ERROR -> {
-                    view?.loginError()
+                    view.loginError()
                 }
                 Auth.Status.AUTH_WITH_FINGER_PRINT -> {
-                    view?.loginBiometrics()
+                    view.loginBiometrics()
                 }
                 Auth.Status.AUTH_WITH_FACE_ID -> {
-                    view?.loginBiometrics()
+                    view.loginBiometrics()
                 }
             }
         }
     }
 
     override fun onEnableFingerPrintClick() {
-        toggleFingerPrint.invoke(view?.isEnableFingerPrint() ?: false)
+        toggleFingerPrint.invoke(view.isEnableFingerPrint() )
     }
 
     override fun biometricError(errString: String) {
-        view?.errorBiometric(errString)
+        view.errorBiometric(errString)
     }
 
     override fun biometricSuccess() {
-        view?.nextActivity()
+        view.nextActivity()
     }
 
     override fun biometricFailed() {
@@ -61,7 +61,7 @@ class PresenterImpl(
         val authMethod = getAuthMethod.invoke()
 
         if (authMethod == AuthMethod.BIOMETRIC) {
-            view?.loginBiometrics()
+            view.loginBiometrics()
         }
     }
 
@@ -70,9 +70,9 @@ class PresenterImpl(
         val authMethod = getAuthMethod.invoke()
         val biometrics = supportBiometrics.invoke()
 
-        view?.setUser(user.username)
-        view?.setPassword(user.password)
-        view?.setupFingerPrint(biometrics, authMethod == AuthMethod.BIOMETRIC)
+        view.setUser(user.username)
+        view.setPassword(user.password)
+        view.setupFingerPrint(biometrics, authMethod == AuthMethod.BIOMETRIC)
     }
 
 }

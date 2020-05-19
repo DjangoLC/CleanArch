@@ -11,23 +11,23 @@ class MainPresenterImpl(
     private val getPopularMovies: GetPopularMovies,
     private val getFavoritesMovies: GetFavoritesMovies,
     uiDispatcher: CoroutineDispatcher
-) : BasePresenterImpl<MainContract.MainView>(uiDispatcher), MainContract.MainPresenter{
+) : BasePresenterImpl<MainContract.MainView>(uiDispatcher), MainContract.MainPresenter {
 
     override fun onLoadMovies() {
         launch {
             val movies = getPopularMovies.invoke()
-            view?.setupMovies(movies)
+            view.setupMovies(movies)
         }
     }
 
     override fun onMovieClick(id: Int) {
-        view?.navigateToDetail(id)
+        view.navigateToDetail(id)
     }
 
     override fun onLoadFavoritesMovies() {
         launch {
             val movies = getFavoritesMovies.invoke()
-            view?.setupMovies(movies)
+            view.setupMovies(movies)
         }
     }
 

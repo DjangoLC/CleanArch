@@ -16,8 +16,8 @@ class DetailPresenterImpl(
     override fun onLoadInfo() {
         launch {
             val movie = getMovieById.invoke(movieId)
-            view?.setMovie(movie)
-            view?.setFavorite(movie.favorite)
+            view.setMovie(movie)
+            view.setFavorite(movie.favorite)
         }
     }
 
@@ -25,7 +25,7 @@ class DetailPresenterImpl(
         launch {
             val movie = getMovieById.invoke(movieId)
             val movieUpdate = toggleMovieFavorite.invoke(movie)
-            view?.setFavorite(movieUpdate.favorite)
+            view.setFavorite(movieUpdate.favorite)
         }
     }
 }
