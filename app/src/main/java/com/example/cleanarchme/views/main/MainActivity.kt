@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity(),
             presenter.loadMovies(it)
         }
         permissionRequester.request {}
-        presenter.onLoadMovies()
+        presenter.loadMovies()
     }
 
     override fun onDestroy() {

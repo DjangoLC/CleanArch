@@ -3,6 +3,7 @@ package com.example.cleanarchme.views.main
 import android.view.View
 import android.widget.AdapterView
 import com.example.cleanarchme.R
+import com.example.data.MovieFilterType
 
 class ManagerSpinnerMovies(private val movieListener: (MovieFilterType) -> Unit) :
     AdapterView.OnItemSelectedListener {
@@ -21,10 +22,5 @@ class ManagerSpinnerMovies(private val movieListener: (MovieFilterType) -> Unit)
                 movieListener(MovieFilterType.FAVORITES_MOVIES)
             }
         }
-    }
-
-    enum class MovieFilterType {
-        ALL_MOVIES,
-        FAVORITES_MOVIES
     }
 }

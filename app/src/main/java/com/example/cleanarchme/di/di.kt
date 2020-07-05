@@ -88,7 +88,7 @@ private val scopesModule = module {
     scope(named<MainActivity>()) {
 
         scoped<MainContract.MainPresenter> {
-            MainPresenterImpl(GetPopularMovies(get()), GetFavoritesMovies(get()), get())
+            MainPresenterImpl(GetMovies(get()), get())
         }
     }
 
