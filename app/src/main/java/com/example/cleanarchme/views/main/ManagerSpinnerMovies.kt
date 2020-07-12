@@ -3,6 +3,7 @@ package com.example.cleanarchme.views.main
 import android.view.View
 import android.widget.AdapterView
 import com.example.cleanarchme.R
+import com.example.data.repository.movie.filter.MovieFilterType
 
 class ManagerSpinnerMovies(private val movieListener: (MovieFilterType) -> Unit) :
     AdapterView.OnItemSelectedListener {
@@ -14,17 +15,17 @@ class ManagerSpinnerMovies(private val movieListener: (MovieFilterType) -> Unit)
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when (parent?.adapter?.getItem(position) as String) {
             parent.context.getString(R.string.all) -> {
-                movieListener(MovieFilterType.ALL_MOVIES)
+                movieListener(MovieFilterType.ALL)
             }
 
             parent.context.getString(R.string.favorite) -> {
-                movieListener(MovieFilterType.FAVORITES_MOVIES)
+                movieListener(MovieFilterType.FAVORITES)
+            }
+
+            parent.context.getString(R.string.popularity) -> {
+                movieListener(MovieFilterType.POPULARITY)
             }
         }
     }
 
-    enum class MovieFilterType {
-        ALL_MOVIES,
-        FAVORITES_MOVIES
-    }
 }

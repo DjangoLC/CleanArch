@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- solids that simulate shadow !-->
+
+    <item>
+        <shape>
+            <corners android:radius="@dimen/radius_corner" />
+            <solid android:color="#0DCCCCCC" />
+            <padding
+                android:bottom="12dp"
+                android:left="12dp"
+                android:right="12dp"
+                android:top="12dp" />
+        </shape>
+    </item>
+
+    <!-- main background !-->
+    <item>
+        <shape>
+            <corners android:radius="@dimen/radius_corner" />
+            <solid android:color="#ffffff" />
+        </shape>
+    </item>
+
+
+</layer-list>

@@ -5,4 +5,25 @@
         <attr name="ratio" format="float" />
     </declare-styleable>
 
+    <declare-styleable name="CustomTextInputLayout">
+        <attr name="hintColorActive" format="reference" />
+        <attr name="hintColorInactive" format="reference" />
+        <attr name="customEndDrawable" format="reference" />
+        <attr name="showCustomEndDrawable" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="CardLayout">
+        <attr name="cardCornerRadius" format="dimension" />
+        <attr name="cardInsetHorizontal" format="dimension" />
+        <attr name="cardInsetTop" format="dimension" />
+        <attr name="cardInsetBottom" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomSwitch">
+        <attr name="textOn" format="string|reference" />
+        <attr name="textOff" format="string|reference" />
+        <attr name="backColorGroundShip" format="reference" />
+        <attr name="backColorGroundSwitch" format="reference" />
+    </declare-styleable>
+
 </resources>

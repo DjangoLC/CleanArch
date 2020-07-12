@@ -13,8 +13,7 @@ class MoviesRepository(
     private val regionRepository: RegionRepository
 ) : MovieRepository {
 
-    override suspend fun popularMovies(): List<Movie> {
-
+    override suspend fun getMovies(): List<Movie> {
         if (localDataSource.isEmpty()) {
             val movies =
                 remoteDataSource.getPopularMovies(apiKey, regionRepository.findLastRegion())
@@ -30,10 +29,6 @@ class MoviesRepository(
 
     override suspend fun updateMovie(movie: Movie) {
         return localDataSource.updateMovie(movie)
-    }
-
-    override suspend fun favoriteMovies() : List<Movie>{
-        return localDataSource.getFavoriteMovies()
     }
 
 }

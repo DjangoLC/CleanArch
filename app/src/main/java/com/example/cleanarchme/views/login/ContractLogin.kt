@@ -5,10 +5,9 @@ import com.example.cleanarchme.views.BaseView
 
 interface ContractLogin {
 
-    interface LoginView : BaseView {
+    interface View : BaseView {
         fun setUser(user: String)
         fun setPassword(pass: String)
-        fun isEnableFingerPrint(): Boolean
         fun emptyFields()
         fun errorFingerPrint()
         fun setupFingerPrint(visibility: Boolean, check: Boolean)
@@ -19,13 +18,14 @@ interface ContractLogin {
         fun loginBiometrics()
     }
 
-    interface Presenter : BasePresenter<LoginView> {
+    interface Presenter : BasePresenter<View> {
         fun onLoginClick(user: String, pass: String)
-        fun onEnableFingerPrintClick()
+        fun onEnableFingerPrintClick(boolean: Boolean)
         fun biometricError(errString: String)
         fun biometricSuccess()
         fun biometricFailed()
         fun onLogin()
+        fun setupView()
     }
 
 }

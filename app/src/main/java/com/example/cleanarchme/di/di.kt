@@ -14,7 +14,7 @@ import com.example.cleanarchme.views.detail.DetailContract
 import com.example.cleanarchme.views.detail.DetailPresenterImpl
 import com.example.cleanarchme.views.login.ContractLogin
 import com.example.cleanarchme.views.login.PresenterImpl
-import com.example.cleanarchme.views.login.LoginActivity
+import com.example.cleanarchme.views.login.Activity
 import com.example.cleanarchme.views.main.MainActivity
 import com.example.cleanarchme.views.main.MainContract
 import com.example.cleanarchme.views.main.MainPresenterImpl
@@ -24,6 +24,7 @@ import com.example.data.auth.Auth
 import com.example.data.auth.AuthValidator
 import com.example.data.repository.movie.MovieRepository
 import com.example.data.repository.movie.MoviesRepository
+import com.example.data.repository.movie.filter.FilterFactory
 import com.example.data.repository.region.RegionRepository
 import com.example.data.repository.region.RegionsRepository
 import com.example.data.repository.user.UserRepository
@@ -88,7 +89,7 @@ private val scopesModule = module {
     scope(named<MainActivity>()) {
 
         scoped<MainContract.MainPresenter> {
-            MainPresenterImpl(GetPopularMovies(get()), GetFavoritesMovies(get()), get())
+            MainPresenterImpl(GetMovies(get(), FilterFactory()),get())
         }
     }
 
@@ -98,7 +99,7 @@ private val scopesModule = module {
         }
     }
 
-    scope(named<LoginActivity>()) {
+    scope(named<Activity>()) {
         scoped<ContractLogin.Presenter> {
             PresenterImpl(
                 Login(get()),

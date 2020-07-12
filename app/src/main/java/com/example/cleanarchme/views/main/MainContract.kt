@@ -2,6 +2,7 @@ package com.example.cleanarchme.views.main
 
 import com.example.cleanarchme.views.BasePresenter
 import com.example.cleanarchme.views.BaseView
+import com.example.data.repository.movie.filter.MovieFilterType
 import com.example.domain.Movie
 
 interface MainContract {
@@ -12,9 +13,9 @@ interface MainContract {
     }
 
     interface MainPresenter : BasePresenter<MainView> {
-        fun onLoadMovies()
         fun onMovieClick(id: Int)
-        fun onLoadFavoritesMovies()
-        fun loadMovies(filterType: ManagerSpinnerMovies.MovieFilterType)
+        fun loadMovies()
+
+        fun setFilterType(filterType: MovieFilterType)
     }
 }

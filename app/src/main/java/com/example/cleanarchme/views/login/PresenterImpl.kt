@@ -14,7 +14,7 @@ class PresenterImpl(
     private val getAuthMethod: GetAuthMethod,
     private val supportBiometrics: SupportBiometrics,
     uiDispatcher: CoroutineDispatcher
-) : BasePresenterImpl<ContractLogin.LoginView>(uiDispatcher), ContractLogin.Presenter{
+) : BasePresenterImpl<ContractLogin.View>(uiDispatcher), ContractLogin.Presenter{
 
     override fun onLoginClick(user: String, pass: String) {
         launch {
@@ -41,8 +41,8 @@ class PresenterImpl(
         }
     }
 
-    override fun onEnableFingerPrintClick() {
-        toggleFingerPrint.invoke(view.isEnableFingerPrint() )
+    override fun onEnableFingerPrintClick(boolean: Boolean) {
+        toggleFingerPrint.invoke(boolean)
     }
 
     override fun biometricError(errString: String) {
@@ -65,7 +65,7 @@ class PresenterImpl(
         }
     }
 
-    private fun setupView() {
+    override fun setupView() {
         val user = getUser.invoke()
         val authMethod = getAuthMethod.invoke()
         val biometrics = supportBiometrics.invoke()

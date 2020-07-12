@@ -34,10 +34,11 @@ class MainActivity : AppCompatActivity(),
         presenter.attach(this)
         recyclerMovies.adapter = moviesAdapter
         spinner.onItemSelectedListener = ManagerSpinnerMovies {
-            presenter.loadMovies(it)
+            presenter.setFilterType(it)
+            presenter.loadMovies()
         }
         permissionRequester.request {}
-        presenter.onLoadMovies()
+        presenter.loadMovies()
     }
 
     override fun onDestroy() {

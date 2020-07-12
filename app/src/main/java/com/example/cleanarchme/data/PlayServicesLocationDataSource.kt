@@ -1,5 +1,6 @@
 package com.example.cleanarchme.data
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.location.Geocoder
 import android.location.Location
@@ -14,6 +15,7 @@ class PlayServicesLocationDataSource(application: Application) : LocationDataSou
     private val fusedLocationClientInfoStatus =
         LocationServices.getFusedLocationProviderClient(application)
 
+    @SuppressLint("MissingPermission")
     override suspend fun getLastLocation(): String? =
         suspendCancellableCoroutine { continuation ->
             fusedLocationClientInfoStatus.lastLocation.addOnCompleteListener { l ->

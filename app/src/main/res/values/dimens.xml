@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="control_corner_material">2dp</dimen>
+    <dimen name="radius_corner">16dp</dimen>
+    <dimen name="settings_toggle_width">262dp</dimen>
+
+</resources>
