@@ -7,13 +7,14 @@ import com.example.domain.Movie
 
 class GetMovies(
     private val repository: MovieRepository,
-    private val filterFactory: FilterFactory) {
+    private val filterFactory: FilterFactory
+) {
 
     suspend fun invoke(filterType: MovieFilterType): List<Movie> {
 
         val movies = repository.getMovies()
         val movieFilter = filterFactory.create(filterType)
         return movieFilter.filter(movies)
-    }
 
+    }
 }

@@ -11,20 +11,15 @@ class MainPresenterImpl(
     uiDispatcher: CoroutineDispatcher
 ) : BasePresenterImpl<MainContract.MainView>(uiDispatcher), MainContract.MainPresenter {
 
-    private var filterType = MovieFilterType.ALL
-
     override fun onMovieClick(id: Int) {
         view.navigateToDetail(id)
     }
 
-    override fun loadMovies() {
+    override fun loadMovies(filterType: MovieFilterType) {
         launch {
             val movies = getMovies.invoke(filterType)
+
             view.setupMovies(movies)
         }
-    }
-
-    override fun setFilterType(filterType: MovieFilterType) {
-        this.filterType = filterType
     }
 }

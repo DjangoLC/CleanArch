@@ -56,8 +56,6 @@ class Activity : AppCompatActivity(), ContractLogin.View {
 
     private lateinit var outlineProvider: TweakableOutlineProvider
 
-    private val mAdapter = SnapAdapter()
-
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +64,7 @@ class Activity : AppCompatActivity(), ContractLogin.View {
         presenter.attach(this)
         presenter.setupView()
         btnLogin.setOnClickListener {
-            //presenter.onLoginClick(tilUser.text.toString(),tilPass.text.toString())
+            presenter.onLoginClick(tilUser.text.toString(),tilPass.text.toString())
         }
 
         checkFingerPrint.setOnCheckedChangeListener { _, isChecked ->
@@ -76,18 +74,6 @@ class Activity : AppCompatActivity(), ContractLogin.View {
         customSwitch.seClickTextOnListener {
             toast("result is: $it")
         }
-
-
-        recyclerSnap.apply {
-            layoutManager =
-                LinearLayoutManager(this@Activity, LinearLayoutManager.HORIZONTAL, false)
-            adapter = mAdapter
-            val snapHelper = LinearSnapHelper()
-            snapHelper.attachToRecyclerView(this)
-        }
-
-        mAdapter.snaps = listOf(Snap(), Snap(),Snap(),Snap(),Snap(),Snap(),Snap(),Snap(),Snap(),Snap(),Snap())
-
     }
 
 
@@ -110,7 +96,7 @@ class Activity : AppCompatActivity(), ContractLogin.View {
     }
 
     override fun setUser(user: String) {
-        //tilUser.setText(user)
+        tilUser.setText(user)
     }
 
     override fun setPassword(pass: String) {

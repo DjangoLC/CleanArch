@@ -3,6 +3,7 @@ package com.example.cleanarchme.views.main
 import android.view.View
 import android.widget.AdapterView
 import com.example.cleanarchme.R
+
 import com.example.data.repository.movie.filter.MovieFilterType
 
 class ManagerSpinnerMovies(private val movieListener: (MovieFilterType) -> Unit) :
@@ -27,5 +28,4 @@ class ManagerSpinnerMovies(private val movieListener: (MovieFilterType) -> Unit)
             }
         }
     }
-
 }

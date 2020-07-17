@@ -14,8 +14,7 @@ interface MainContract {
 
     interface MainPresenter : BasePresenter<MainView> {
         fun onMovieClick(id: Int)
-        fun loadMovies()
 
-        fun setFilterType(filterType: MovieFilterType)
+        fun loadMovies(filterType: MovieFilterType = MovieFilterType.ALL)
     }
 }

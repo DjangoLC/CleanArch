@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity(),
         presenter.attach(this)
         recyclerMovies.adapter = moviesAdapter
         spinner.onItemSelectedListener = ManagerSpinnerMovies {
-            presenter.setFilterType(it)
             presenter.loadMovies()
         }
         permissionRequester.request {}
