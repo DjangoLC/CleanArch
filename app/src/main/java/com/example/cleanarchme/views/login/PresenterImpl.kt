@@ -68,11 +68,13 @@ class PresenterImpl(
     override fun setupView() {
         val user = getUser.invoke()
         val authMethod = getAuthMethod.invoke()
-        val biometrics = supportBiometrics.invoke()
+        val supportBiometrics = supportBiometrics.invoke()
 
         view.setUser(user.username)
         view.setPassword(user.password)
-        view.setupFingerPrint(biometrics, authMethod == AuthMethod.BIOMETRIC)
+        view.setupFingerPrint(supportBiometrics, authMethod == AuthMethod.BIOMETRIC)
+
+        if (authMethod == AuthMethod.BIOMETRIC) onLogin()
     }
 
 }

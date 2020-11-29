@@ -1,5 +1,6 @@
 package com.example.cleanarchme.views.common
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Canvas
@@ -12,8 +13,9 @@ import android.view.View.OnTouchListener
 import com.example.cleanarchme.R
 import com.google.android.material.textfield.TextInputLayout
 
-class CustomTextInputLayout( c: Context,  attributes: AttributeSet) :
-    TextInputLayout(c, attributes), View.OnFocusChangeListener {
+@SuppressLint("ClickableViewAccessibility")
+class CustomTextInputLayout(c: Context, attributes: AttributeSet) :
+    TextInputLayout(c, attributes) {
 
     private val colorHintActive: Int
     private val colorHintInactive: Int
@@ -43,7 +45,6 @@ class CustomTextInputLayout( c: Context,  attributes: AttributeSet) :
         this.addOnEditTextAttachedListener {
             Log.e("tag,","asdasdasdasd")
             editText?.apply {
-                setOnFocusChangeListener(this@CustomTextInputLayout)
                 this.setCompoundDrawablesWithIntrinsicBounds(null, null, if (showEndIcon) endIcon else null, null)
                 this.setOnTouchListener(OnTouchListener { v, event ->
                     val DRAWABLE_LEFT = 0
@@ -69,7 +70,6 @@ class CustomTextInputLayout( c: Context,  attributes: AttributeSet) :
 
     override fun onDraw(canvas: Canvas?) {
         val isEmpty = editText?.text?.isEmpty() ?: true
-        editText?.onFocusChangeListener = this
         hintTextColor = if (isEmpty || isFocused) csl1 else csl2
         invalidate()
         requestLayout()
@@ -83,32 +83,5 @@ class CustomTextInputLayout( c: Context,  attributes: AttributeSet) :
         }
         super.onDraw(canvas)
     }
-
-    override fun onFocusChange(v: View?, hasFocus: Boolean) {
-        val isEmpty = editText?.text?.isEmpty() ?: true
-        setupHints(hasFocus,isEmpty)
-    }
-
-    private fun setupHints(focused: Boolean, isEmpty: Boolean) {
-        //true = verde  false = black
-        val isEmpty = editText?.text?.isEmpty() ?: true
-        Log.e("tag,","focus change $isEmpty")
-        if (focused && (isEmpty || !isEmpty)){
-            hintTextColor = csl2
-
-        } else if(!focused && !isEmpty){
-            hintTextColor = csl2
-            editText?.setHintTextColor(csl2)
-            defaultHintTextColor= csl2
-        } else if(!focused && isEmpty){
-            hintTextColor = csl2
-            defaultHintTextColor= csl1
-        } else if(focused && isEmpty){
-            hintTextColor = csl2
-        }
-        invalidate()
-        requestLayout()
-    }
-
 
 }

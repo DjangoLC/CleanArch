@@ -54,8 +54,6 @@ class Activity : AppCompatActivity(), ContractLogin.View {
 
     }
 
-    private lateinit var outlineProvider: TweakableOutlineProvider
-
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +61,7 @@ class Activity : AppCompatActivity(), ContractLogin.View {
 
         presenter.attach(this)
         presenter.setupView()
+
         btnLogin.setOnClickListener {
             presenter.onLoginClick(tilUser.text.toString(),tilPass.text.toString())
         }
@@ -74,25 +73,6 @@ class Activity : AppCompatActivity(), ContractLogin.View {
         customSwitch.seClickTextOnListener {
             toast("result is: $it")
         }
-    }
-
-
-    private fun setScaleX(scaleXPercent: Int) {
-        val scale = scaleXPercent - 200 / 2
-        outlineProvider.scaleX = 1 + scale / 100f
-    }
-
-
-    private fun setScaleY(scaleYPercent: Int) {
-        val scale = scaleYPercent - 200 / 2
-        outlineProvider.scaleY = 1 + scale / 100f
-    }
-
-
-    private fun setShiftY(shiftYDp: Int) {
-        val adjustedShiftYDp = shiftYDp - 200 / 2
-        val adjustedShiftYPixel = adjustedShiftYDp * resources.displayMetrics.density
-        outlineProvider.yShift = adjustedShiftYPixel.roundToInt()
     }
 
     override fun setUser(user: String) {
