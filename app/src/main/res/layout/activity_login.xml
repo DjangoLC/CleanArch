@@ -27,6 +27,7 @@
                 android:id="@+id/tilUser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="kike"
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -42,6 +43,7 @@
                 android:id="@+id/tilPass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="123"
                 android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>

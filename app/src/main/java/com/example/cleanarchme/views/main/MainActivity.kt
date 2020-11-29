@@ -3,9 +3,11 @@ package com.example.cleanarchme.views.main
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cleanarchme.R
 import com.example.cleanarchme.views.common.PermissionRequester
+import com.example.cleanarchme.views.common.RecyclerViewDisabler
 import com.example.cleanarchme.views.detail.DetailActivity
 import com.example.domain.Movie
 import kotlinx.android.synthetic.main.activity_main.*
@@ -17,6 +19,9 @@ class MainActivity : AppCompatActivity(),
     private val presenter: MainContract.MainPresenter by lifecycleScope.inject()
 
     private val permissionRequester = PermissionRequester(this, ACCESS_COARSE_LOCATION)
+
+    private val recyclerViewDisabler = RecyclerViewDisabler()
+
     private val moviesAdapter by lazy {
         MoviesAdapter {
             presenter.onMovieClick(it.id)
@@ -33,11 +38,19 @@ class MainActivity : AppCompatActivity(),
     private fun setUp() {
         presenter.attach(this)
         recyclerMovies.adapter = moviesAdapter
+        recyclerMovies.setHasFixedSize(true)
         spinner.onItemSelectedListener = ManagerSpinnerMovies {
             presenter.loadMovies(it)
         }
+        swipeToRefresh.setOnRefreshListener {
+            moviesAdapter.movies = emptyList()
+            moviesAdapter.showShimmer = true
+            recyclerMovies.addOnItemTouchListener(recyclerViewDisabler)
+            presenter.loadMovies()
+        }
         permissionRequester.request {}
         presenter.loadMovies()
+        recyclerMovies.addOnItemTouchListener(recyclerViewDisabler)
     }
 
     override fun onDestroy() {
@@ -46,7 +59,10 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun setupMovies(movies: List<Movie>) {
-        moviesAdapter.movies = movies
+            swipeToRefresh.isRefreshing = false
+            moviesAdapter.showShimmer = false
+            moviesAdapter.movies = movies
+            recyclerMovies.removeOnItemTouchListener(recyclerViewDisabler)
     }
 
     override fun navigateToDetail(id: Int) {

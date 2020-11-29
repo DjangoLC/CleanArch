@@ -19,7 +19,6 @@ class LocalDataSourceImpl(private val movieDao: MovieDao) : LocalDataSource {
     override suspend fun saveMovies(movies: List<Movie>) =
         withContext(Dispatchers.IO) { movieDao.insertMovies(movies.map { it.toMovieDb() }) }
 
-
     override suspend fun findById(id: Int): Movie =
         withContext(Dispatchers.IO) { movieDao.findById(id).toDomain() }
 

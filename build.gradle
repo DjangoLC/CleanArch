@@ -38,7 +38,9 @@ allprojects {
                 roomRuntime         : 'androidx.room:room-runtime:2.2.4',
                 glide               : 'com.github.bumptech.glide:glide:4.11.0',
                 dexter              : 'com.karumi:dexter:6.0.2',
-                biometrics           : 'androidx.biometric:biometric:1.0.1'
+                biometrics          : 'androidx.biometric:biometric:1.0.1',
+                shimmer             : 'com.facebook.shimmer:shimmer:0.5.0',
+                swipeToRefresh      : 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
         ]
 
         androidKaptLibs = [

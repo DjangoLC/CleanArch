@@ -1,3 +1,4 @@
+include ':entities'
 rootProject.name='CleanArchMe'
 include ':app'
 include ':data'

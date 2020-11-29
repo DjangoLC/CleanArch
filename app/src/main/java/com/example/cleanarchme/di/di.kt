@@ -53,6 +53,7 @@ private val appModule = module {
     single(named("apiKey")) { androidApplication().getString(R.string.api_key) }
     single(named("baseUrl")) { "https://api.themoviedb.org/3/" }
     single { MovieDataBase.build(get()).movieDao() }
+
     factory<UserPreferences> { UserPreferencesImpl(get()) }
     factory<Auth> { (fragAct: FragmentActivity, callback: BiometricPrompt.AuthenticationCallback) ->
         AuthImpl(fragAct, callback)

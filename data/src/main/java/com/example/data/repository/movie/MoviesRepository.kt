@@ -21,7 +21,7 @@ class MoviesRepository(
             localDataSource.saveMovies(movies)
         }
 
-        return localDataSource.getPopularMovies()
+        return remoteDataSource.getPopularMovies(apiKey, regionRepository.findLastRegion())
     }
 
     override suspend fun findById(id: Int) : Movie {
