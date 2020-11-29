@@ -1,16 +1,20 @@
 package com.example.usecases
 
-import com.example.data.MovieFilterType
-import com.example.data.MoviesFactory
 import com.example.data.repository.movie.MovieRepository
+import com.example.data.repository.movie.filter.FilterFactory
+import com.example.data.repository.movie.filter.MovieFilterType
 import com.example.domain.Movie
 
-class GetMovies(private val moviesRepo: MovieRepository) {
+class GetMovies(
+    private val repository: MovieRepository,
+    private val filterFactory: FilterFactory
+) {
 
-    suspend operator fun invoke(filter: MovieFilterType): List<Movie> {
-        val movies = moviesRepo.popularMovies()
-        val manager = MoviesFactory.create(filter)
-        return manager.filterBy(movies)
+    suspend fun invoke(filterType: MovieFilterType): List<Movie> {
+
+        val movies = repository.getMovies()
+        val movieFilter = filterFactory.create(filterType)
+        return movieFilter.filter(movies)
+
     }
-
 }

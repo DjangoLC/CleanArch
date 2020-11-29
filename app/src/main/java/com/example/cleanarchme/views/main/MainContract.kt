@@ -2,7 +2,7 @@ package com.example.cleanarchme.views.main
 
 import com.example.cleanarchme.views.BasePresenter
 import com.example.cleanarchme.views.BaseView
-import com.example.data.MovieFilterType
+import com.example.data.repository.movie.filter.MovieFilterType
 import com.example.domain.Movie
 
 interface MainContract {
@@ -14,6 +14,7 @@ interface MainContract {
 
     interface MainPresenter : BasePresenter<MainView> {
         fun onMovieClick(id: Int)
-        fun loadMovies(filterType: MovieFilterType = MovieFilterType.ALL_MOVIES)
+
+        fun loadMovies(filterType: MovieFilterType = MovieFilterType.ALL)
     }
 }

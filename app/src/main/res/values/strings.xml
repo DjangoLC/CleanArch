@@ -9,10 +9,18 @@
     <string name="error_fingerprint">ocurrio un error al autenticar con huella</string>
     <string name="login_error">Error al iniciar sesion</string>
     <string name="biometric_error">Error en biometrico</string>
+    <string name="popularity">Populares</string>
+    <string name="traditional">Tradicional</string>
+    <string name="fixed_payment">Pagos fijos</string>
+    <string name="default_switch_on">on</string>
+    <string name="default_switch_off">off</string>
+    <string name="off">Apagado</string>
+    <string name="on">Encendido</string>
 
     <string-array name="movie_options">
-        <item>Todas</item>
-        <item>Favoritos</item>
+        <item>@string/all</item>
+        <item>@string/favorite</item>
+        <item>@string/popularity</item>
     </string-array>
 
 </resources>

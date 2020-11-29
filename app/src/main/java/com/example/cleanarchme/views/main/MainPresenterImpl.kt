@@ -1,7 +1,7 @@
 package com.example.cleanarchme.views.main
 
 import com.example.cleanarchme.views.BasePresenterImpl
-import com.example.data.MovieFilterType
+import com.example.data.repository.movie.filter.MovieFilterType
 import com.example.usecases.GetMovies
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -17,9 +17,8 @@ class MainPresenterImpl(
 
     override fun loadMovies(filterType: MovieFilterType) {
         launch {
-            val movies = getMovies(filterType)
+            val movies = getMovies.invoke(filterType)
             view.setupMovies(movies)
         }
     }
-
 }

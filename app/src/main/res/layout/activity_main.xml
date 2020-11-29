@@ -7,7 +7,6 @@
     android:background="@android:color/background_light"
     tools:context=".views.main.MainActivity">
 
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -35,8 +34,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/spinner_style"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:background="@drawable/spinner_style">
 
                 <Spinner
                     android:id="@+id/spinner"
@@ -56,9 +55,6 @@
         android:id="@+id/swipeToRefresh"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -70,7 +66,5 @@
             tools:listitem="@layout/row_movie" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

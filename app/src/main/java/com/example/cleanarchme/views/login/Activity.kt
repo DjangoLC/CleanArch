@@ -1,21 +1,34 @@
 package com.example.cleanarchme.views.login
 
 import android.content.Intent
+import android.graphics.Outline
+import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.view.ViewOutlineProvider
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SnapHelper
 import com.example.cleanarchme.R
+import com.example.cleanarchme.data.server.Movie
+import com.example.cleanarchme.views.common.TweakableOutlineProvider
 import com.example.cleanarchme.views.common.toast
 import com.example.cleanarchme.views.main.MainActivity
+import com.example.cleanarchme.views.main.MoviesAdapter
 import com.example.cleanarchme.views.show
 import com.example.data.auth.Auth
 import kotlinx.android.synthetic.main.activity_login.*
 import org.koin.android.ext.android.inject
 import org.koin.android.scope.lifecycleScope
 import org.koin.core.parameter.parametersOf
+import kotlin.math.roundToInt
 
-class LoginActivity : AppCompatActivity(), ContractLogin.LoginView {
+class Activity : AppCompatActivity(), ContractLogin.View {
 
     private val presenter: ContractLogin.Presenter by lifecycleScope.inject()
 
@@ -38,22 +51,48 @@ class LoginActivity : AppCompatActivity(), ContractLogin.LoginView {
             super.onAuthenticationFailed()
             presenter.biometricFailed()
         }
+
     }
 
+    private lateinit var outlineProvider: TweakableOutlineProvider
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
         presenter.attach(this)
+        presenter.setupView()
         btnLogin.setOnClickListener {
             presenter.onLoginClick(tilUser.text.toString(),tilPass.text.toString())
         }
 
-        checkFingerPrint.setOnCheckedChangeListener { buttonView, isChecked ->
-            presenter.onEnableFingerPrintClick()
+        checkFingerPrint.setOnCheckedChangeListener { _, isChecked ->
+            presenter.onEnableFingerPrintClick(isChecked)
         }
 
-        presenter.onLogin()
+        customSwitch.seClickTextOnListener {
+            toast("result is: $it")
+        }
+    }
+
+
+    private fun setScaleX(scaleXPercent: Int) {
+        val scale = scaleXPercent - 200 / 2
+        outlineProvider.scaleX = 1 + scale / 100f
+    }
+
+
+    private fun setScaleY(scaleYPercent: Int) {
+        val scale = scaleYPercent - 200 / 2
+        outlineProvider.scaleY = 1 + scale / 100f
+    }
+
+
+    private fun setShiftY(shiftYDp: Int) {
+        val adjustedShiftYDp = shiftYDp - 200 / 2
+        val adjustedShiftYPixel = adjustedShiftYDp * resources.displayMetrics.density
+        outlineProvider.yShift = adjustedShiftYPixel.roundToInt()
     }
 
     override fun setUser(user: String) {
@@ -62,10 +101,6 @@ class LoginActivity : AppCompatActivity(), ContractLogin.LoginView {
 
     override fun setPassword(pass: String) {
         tilPass.setText(pass)
-    }
-
-    override fun isEnableFingerPrint(): Boolean {
-        return checkFingerPrint.isChecked
     }
 
     override fun emptyFields() {

@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="colorShimmer">#DDDDDD</color>
+    <color name="green">#00953a</color>
+    <color name="gray">#66000000</color>
+    <color name="sombra">#0ACCCCCC</color>
 </resources>

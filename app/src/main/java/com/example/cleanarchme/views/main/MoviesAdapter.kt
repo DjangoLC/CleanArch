@@ -44,6 +44,7 @@ class MoviesAdapter(private val listener: (Movie) -> Unit) :
 
             val movie = movies[position]
             holder.bind(movie)
+            holder.itemView.setOnClickListener { listener.invoke(movie) }
         }
 
     }

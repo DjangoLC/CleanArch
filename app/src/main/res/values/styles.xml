@@ -6,5 +6,38 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
     </style>
+
+
+    <style name="TexInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+        <item name="endIconMode">clear_text</item>
+
+    </style>
+
+    <style name="ShapeAppearance.SmallComponent" parent="">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+
+    <style name="Switch.Button" parent="TextAppearance.AppCompat.Widget.Switch">
+        <item name="textAppearanceButton">@style/Switch.Text</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:background">@drawable/bg_button</item>
+        <item name="android:thumb">@drawable/shape</item>
+        <item name="android:thumbOffset">8dp</item>
+    </style>
+
+    <style name="Switch.Text" parent="TextAppearance.AppCompat">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:colorBackground">@color/colorPrimaryDark</item>
+    </style>
+
+
 </resources>
